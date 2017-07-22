@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title PostOffline
+
+    link(rel="stylesheet", href="styles/styles.css")
+body
+    
+    div.app
+        h1 PostOffline
+        form.postForm
+            input.postForm-input(placeholder="Today was such a great day...", autofocus)
+            button.postForm-button(type="submit") Send message
+        ul.list
+
+    script(src="js/PostRenderer.js")
+    script(src="js/PostSender.js")
+    script(src="js/app.js")
