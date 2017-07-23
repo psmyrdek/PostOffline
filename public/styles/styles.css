@@ -42,13 +42,13 @@ body {
 .listItem {
     list-style-type: none;
     margin-bottom: 10px;
-    background-color: #f9f9f9;
+    background-color: #ffdcb0;
     padding: 10px;
 }
 
 .listItem--offline {
     background: none;
-    border: 1px dashed #cacaca;
+    border: 1px dashed #ffdcb0;
 }
 
 .listItem-meta {

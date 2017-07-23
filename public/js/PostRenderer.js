@@ -4,10 +4,10 @@ class PostRenderer {
         this.domList = DOMList;
     }
 
-    getPostTemplate(author, content, date) {
+    getPostTemplate(author, content, date, offline) {
 
         const template = `
-            <li class="listItem">
+            <li class="listItem ${offline ? 'listItem--offline' : ''}">
                 <div class="listItem-meta">
                     <p class="listItem-author">${author}</p>
                     <p class="listItem-date">${date}</p>
@@ -23,7 +23,7 @@ class PostRenderer {
         let listContent = '';
 
         for (let post of posts) {
-            listContent += this.getPostTemplate(post.author, post.content, post.displayDate);
+            listContent += this.getPostTemplate(post.author, post.content, post.displayDate, post.offline);
         }
 
         this.domList.innerHTML = listContent;

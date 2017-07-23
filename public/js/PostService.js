@@ -1,16 +1,20 @@
 class PostService {
 
     constructor(postRenderer, errorHandler) {
+
+        this.OFFLINE_POSTS_KEY = 'offline-posts';
         
         this.posts = []; // state
+        this.offlinePosts = this.getOfflinePosts();
 
         this.postRenderer = postRenderer;
         this.errorHandler = errorHandler;
 
         fetch('/posts', { method: 'GET' })
-            .then(this.asJson)
+            .then(response => response.json())
             .then((posts) => {
-                this.posts = posts.map(this.formatPost).sort(this.sortPosts);
+                this.posts = posts.map(this.formatPost).concat(this.offlinePosts).sort(this.sortPosts);
+                console.log(this.posts);
                 this.postRenderer.renderPosts(this.posts);
             });
     }
@@ -24,15 +28,32 @@ class PostService {
         const post = { author: '@psmyrdek', content: postContent, date: new Date() };
 
         return fetch('/posts', { method: 'POST', headers: postHeaders, body: JSON.stringify(post) })
-            .then(this.asJson)
+            .then(response => response.json())
             .then((createdPost) => {
                 this.posts.unshift(this.formatPost(createdPost));
                 this.postRenderer.renderPosts(this.posts);
             })
+            .catch((err) => {
+                this.addOffline(post);
+            });
     }
 
-    asJson(response) {
-        return response.json();
+    addOffline(post) {
+        post.offline = true;
+        const offlinePost = this.formatPost(post);
+
+        const offlinePosts = this.getOfflinePosts();
+
+        offlinePosts.push(offlinePost);
+        this.posts.unshift(offlinePost);
+
+        localStorage.setItem(this.OFFLINE_POSTS_KEY, JSON.stringify(offlinePosts));
+        this.postRenderer.renderPosts(this.posts);
+    }
+
+    getOfflinePosts() {
+        return localStorage.getItem(this.OFFLINE_POSTS_KEY) ?
+            JSON.parse(localStorage.getItem(this.OFFLINE_POSTS_KEY)).map(this.formatPost) : [];
     }
     
     formatPost(post) {
@@ -40,20 +61,12 @@ class PostService {
             author: post.author,
             content: post.content,
             date: new Date(post.date),
-            displayDate: new Date(post.date).toLocaleDateString()
+            displayDate: new Date(post.date).toLocaleDateString(),
+            offline: !!post.offline
         };
     }
 
     sortPosts(prev, next) {
-        const prevTimestamp = prev.date.getTime();
-        const nextTimestamp = prev.date.getTime();
-
-        if (prevTimestamp < nextTimestamp) { 
-            return 1;
-        } else if (prevTimestamp > nextTimestamp) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return new Date(next.date) - new Date(prev.date);
     }
 }

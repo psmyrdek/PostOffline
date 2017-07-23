@@ -1,14 +1,15 @@
 const router = require('express').Router();
-var dateFormat = require('dateformat');
-
-const posts = [];
+const cache = require('./cache.js')({ posts: [] });
+const dateFormat = require('dateformat');
 
 router.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(posts));
+    res.send(JSON.stringify(cache.get('posts')));
 });
 
 router.post('/', (req, res) => {
+
+    const posts = cache.get('posts');
 
     const post = {
         author: req.body.author, 
@@ -18,6 +19,7 @@ router.post('/', (req, res) => {
     };
 
     posts.push(post);
+    cache.set('posts', posts);
 
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(post));
