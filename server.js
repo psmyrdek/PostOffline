@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.use('/posts', require('./posts'))
+app.use('/posts', require('./server/posts'))
 
 const server = http.createServer(app);
 

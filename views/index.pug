@@ -14,11 +14,14 @@ html(lang="en")
     body
         div.app
             h1 PostOffline
+            
             form.postForm
                 input.postForm-input(placeholder="Today was such a great day...", autofocus)
                 button.postForm-button(type="submit") Send message
-            ul.list
 
             include partials/_errors
+            
+            ul.list
+
 
         include partials/_scripts

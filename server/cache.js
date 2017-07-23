@@ -1,4 +1,4 @@
-const cache = module.exports = function (init) {
+module.exports = function (init) {
     const cache = init || {};
     return {
         get: function (key) { return cache[key]; },

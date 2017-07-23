@@ -14,8 +14,12 @@ class PostService {
             .then(response => response.json())
             .then((posts) => {
                 this.posts = posts.map(this.formatPost).concat(this.offlinePosts).sort(this.sortPosts);
-                console.log(this.posts);
                 this.postRenderer.renderPosts(this.posts);
+            })
+            .catch((err) => {
+                this.posts = this.offlinePosts.sort(this.sortPosts);
+                this.postRenderer.renderPosts(this.posts);
+                this.errorHandler.toggleFetchPostsErr(true);
             });
     }
 
@@ -32,9 +36,11 @@ class PostService {
             .then((createdPost) => {
                 this.posts.unshift(this.formatPost(createdPost));
                 this.postRenderer.renderPosts(this.posts);
+                this.errorHandler.toggleFetchPostsErr(false);
             })
             .catch((err) => {
                 this.addOffline(post);
+                this.errorHandler.toggleFetchPostsErr(true);
             });
     }
 
