@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 html(lang="en")
-head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    title PostOffline
+    head
+        title PostOffline
 
-    link(rel="stylesheet", href="styles/styles.css")
-body
-    
-    div.app
-        h1 PostOffline
-        form.postForm
-            input.postForm-input(placeholder="Today was such a great day...", autofocus)
-            button.postForm-button(type="submit") Send message
-        ul.list
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        meta(name="theme-color", content="#333")
 
-    script(src="js/PostRenderer.js")
-    script(src="js/PostSender.js")
-    script(src="js/app.js")
+        link(rel="manifest", href="manifest.json")
+        link(rel="icon", href="images/favicon.ico", type="image/x-icon")
+        link(rel="stylesheet", href="styles/styles.css")
+    body
+        div.app
+            h1 PostOffline
+            form.postForm
+                input.postForm-input(placeholder="Today was such a great day...", autofocus)
+                button.postForm-button(type="submit") Send message
+            ul.list
+
+        include partials/_scripts
