@@ -4,27 +4,23 @@ var dateFormat = require('dateformat');
 const posts = [];
 
 router.get('/', (req, res) => {
-    sendPosts(res);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(posts));
 });
 
 router.post('/', (req, res) => {
-    posts.push(req.body);
-    sendPosts(res);
-});
 
-function sendPosts(res) {
+    const post = {
+        author: req.body.author, 
+        content: req.body.content, 
+        date: req.body.date, 
+        id: posts.length 
+    };
+
+    posts.push(post);
+
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(posts.map((post) => {
-        return {
-            content: post.content,
-            author: post.author,
-            date: formatDate(post.date)
-        }
-    })));
-}
-
-function formatDate(date) {
-    return dateFormat(date, "dd mmmm yyyy");
-}
+    res.send(JSON.stringify(post));
+});
 
 module.exports = router;

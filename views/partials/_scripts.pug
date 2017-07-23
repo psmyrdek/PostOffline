@@ -1,14 +1,15 @@
-script(src="js/PostRenderer.js")
-script(src="js/PostSender.js")
-script(src="js/app.js")
+//- script.
+//-     if ('serviceWorker' in navigator) {
+//-         window.addEventListener('load', function() {
+//-             navigator.serviceWorker.register('sw.js').then((registration) => {
+//-                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
+//-             }, (err) => {
+//-                 console.log('ServiceWorker registration failed: ', err);
+//-             });
+//-         });
+//-     }
 
-script.
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('sw.js').then((registration) => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, (err) => {
-                console.log('ServiceWorker registration failed: ', err);
-            });
-        });
-    }
+script(src="js/PostRenderer.js")
+script(src="js/PostService.js")
+script(src="js/PostErrorHandler.js")
+script(src="js/app.js")

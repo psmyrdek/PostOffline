@@ -4,25 +4,29 @@ class PostRenderer {
         this.domList = DOMList;
     }
 
-    getPostTemplate({ author, content, date }) {
-        return `
+    getPostTemplate(author, content, date) {
+
+        const template = `
             <li class="listItem">
                 <div class="listItem-meta">
-                    <p class="listItem-author">${content}</p>
+                    <p class="listItem-author">${author}</p>
                     <p class="listItem-date">${date}</p>
                 </div>
                 <p class="listItem-content">${content}</p>
             </li>
         `;
+
+        return template;
     }
 
     renderPosts(posts) {
-        this.domList.innerHTML = '';
-        let list = '';
+        let listContent = '';
+
         for (let post of posts) {
-            list += this.getPostTemplate(post);
+            listContent += this.getPostTemplate(post.author, post.content, post.displayDate);
         }
-        this.domList.innerHTML = list;
+
+        this.domList.innerHTML = listContent;
     }
 
 }

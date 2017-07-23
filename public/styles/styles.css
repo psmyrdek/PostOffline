@@ -46,6 +46,11 @@ body {
     padding: 10px;
 }
 
+.listItem--offline {
+    background: none;
+    border: 1px dashed #cacaca;
+}
+
 .listItem-meta {
     display: flex;
     flex-direction: row;
@@ -64,4 +69,11 @@ body {
 .listItem-content {
     margin: 0;
     margin-top: 5px;
+}
+
+.errorMsg {
+    display: none;
+    font-size: 12px;
+    font-style: italic;
+    color: #a7a7a7;
 }
